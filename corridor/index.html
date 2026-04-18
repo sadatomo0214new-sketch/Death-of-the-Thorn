@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> </title>
+<style>
+  :root {
+    --bg: #1a1a1f;
+    --fg: #c8c4b8;
+    --accent: #8a8478;
+    --deep: #06060a;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "游明朝", "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "ヒラギノ明朝 ProN W3", serif;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    overflow: hidden;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* 微細なノイズを重ねて均質さを崩す */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(ellipse at center, transparent 0%, var(--deep) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  main {
+    position: relative;
+    z-index: 2;
+    max-width: 38em;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .line {
+    font-size: 1.05rem;
+    line-height: 2.4;
+    opacity: 0;
+    animation: emerge 6s ease-out forwards;
+  }
+
+  .gap {
+    height: 18vh;
+  }
+
+  .mark {
+    display: inline-block;
+    font-size: 1.4rem;
+    color: var(--accent);
+    text-decoration: none;
+    opacity: 0;
+    animation: emerge 6s ease-out 3s forwards;
+    transition: color 2s ease, letter-spacing 2s ease;
+    letter-spacing: 0;
+  }
+
+  .mark:hover {
+    color: var(--fg);
+    letter-spacing: 0.2em;
+  }
+
+  @keyframes emerge {
+    from {
+      opacity: 0;
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+
+  /* 小さな画面でも余白を保つ */
+  @media (max-width: 600px) {
+    .line {
+      font-size: 0.95rem;
+    }
+    main {
+      padding: 2rem 1.5rem;
+    }
+    .gap {
+      height: 14vh;
+    }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <p class="line">ここは扉ではない。扉を探した者の視線が一度集まる場所だ。</p>
+    <div class="gap"></div>
+    <a href="./inner.html" class="mark" aria-label=" ">ヰ</a>
+  </main>
+</body>
+</html>

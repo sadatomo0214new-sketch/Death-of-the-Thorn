@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Φ–Y Dock: Thorn</title>
+<style>
+  :root {
+    --bg: #101014;
+    --fg: #9a968a;
+    --heading: #c0bcb0;
+    --link: #7a7468;
+    --link-hover: #c0bcb0;
+    --deep: #04040a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Noto Serif JP", "游明朝", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, var(--deep) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  main {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .title {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--heading);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.3rem;
+    opacity: 0;
+    animation: emerge 5s ease-out 0.5s forwards;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+    color: var(--link);
+    letter-spacing: 0.08em;
+    margin-bottom: 0;
+    opacity: 0;
+    animation: emerge 5s ease-out 1s forwards;
+  }
+
+  .nav {
+    margin-top: 12vh;
+    display: flex;
+    justify-content: center;
+    gap: 6rem;
+    opacity: 0;
+    animation: emerge 5s ease-out 2.5s forwards;
+  }
+
+  .nav a {
+    font-size: 1.3rem;
+    color: var(--link);
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    transition: color 1.5s ease, letter-spacing 1.5s ease;
+  }
+
+  .nav a:hover {
+    color: var(--link-hover);
+    letter-spacing: 0.25em;
+  }
+
+  @keyframes emerge {
+    from { opacity: 0; filter: blur(3px); }
+    to { opacity: 1; filter: blur(0); }
+  }
+
+  @media (max-width: 600px) {
+    .nav { gap: 4rem; }
+    .title { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <p class="title">Φ–Y Dock</p>
+    <p class="subtitle">Thorn</p>
+    <nav class="nav">
+      <a href="./corridor/">棘</a>
+      <a href="./thorn.html">理論</a>
+    </nav>
+  </main>
+</body>
+</html>
