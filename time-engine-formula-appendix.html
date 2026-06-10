@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Time Engine Formula Appendix | Phi-Y OS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <span class="tag">appendix</span><span class="tag">formulas</span><span class="tag">v0.2</span>
+  <h1>Time Engine Formula Appendix</h1>
+  <p class="lead">Strict definitions and formula carry for the Time Engine module.</p>
+  <nav class="nav"><a href="index.html">Index</a><a href="time-engine.html">Time Engine</a><a href="modules.html">Modules</a><a href="dependency.html">Topology Map</a><a href="glossary.html">Glossary</a></nav>
+</header>
+<main>
+<section>
+  <h2>0. Purpose</h2>
+  <p>This appendix contains strict formulas, variable definitions, and operational equations for the Time Engine module. The main page should remain readable as an AI-facing OS module. This appendix carries the heavier machinery.</p>
+</section>
+<section>
+  <h2>1. Variable Set</h2>
+  <pre>Theta = {theta_i}
+R = {r_i}
+Z = {z_i}
+Lambda = {lambda_i}</pre>
+  <ul>
+    <li><code>theta_i</code>: phase component at scale i</li>
+    <li><code>r_i</code>: radial scale at scale i</li>
+    <li><code>z_i</code>: irreversible stacking coordinate</li>
+    <li><code>lambda_i</code>: scale-growth or contraction factor</li>
+  </ul>
+  <ul>
+    <li><code>E_T</code>: observed time-effect result</li>
+    <li><code>sigma_T</code>: forward rotation / gear / scale order</li>
+    <li><code>Sigma_T^adm</code>: admissible Time Engine history set</li>
+    <li><code>P</code>: generalized pressure / constraint field</li>
+    <li><code>R_f</code>: reference frame</li>
+    <li><code>C</code>: consistency constraints</li>
+    <li><code>epsilon</code>: closure tolerance</li>
+    <li><code>N</code>: neighboring loops / adjacent closures</li>
+  </ul>
+</section>
+<section>
+  <h2>2. Forward Engine</h2>
+  <pre>E_T = Eval_sigma_T(Theta, R, Z, Lambda)
+
+sigma_T => E_T</pre>
+</section>
+<section>
+  <h2>3. Minimal Spring-Time</h2>
+  <pre>x(t) = r(t) cos theta(t)
+y(t) = r(t) sin theta(t)
+z(t) = Z(t)
+
+theta(t+T) == theta(t) mod 2pi
+Z(t+T) > Z(t)</pre>
+  <p>The phase returns. The height does not.</p>
+</section>
+<section>
+  <h2>4. Gear-Coupled Scale Relation</h2>
+  <pre>T_{i+1} = N_i T_i
+omega_i = 2pi / T_i
+omega_{i+1} = omega_i / N_i
+lambda_{i+1} = lambda_i ^ N_i
+
+lambda_hour = lambda_sec ^ 3600</pre>
+</section>
+<section>
+  <h2>5. Admissible History Set</h2>
+  <pre>Sigma_T^adm
+= { sigma_i | sigma_i is admissible under P, R_f, C, epsilon }</pre>
+  <p>This prevents arbitrary retro-ordering.</p>
+</section>
+<section>
+  <h2>6. Retro-Selection</h2>
+  <pre>sigma_E_T = Select(E_T, Sigma_T^adm; P)
+
+sigma_E_T =
+argmin_{sigma in Sigma_T^adm}
+D_T( Eval_sigma(Theta, R, Z, Lambda), E_T; P )</pre>
+  <p><code>D_T</code> is a pressure-weighted mismatch function.</p>
+</section>
+<section>
+  <h2>7. Consistency Closure</h2>
+  <pre>E_T' = Eval_sigma_E_T(Theta, R, Z, Lambda)
+
+d(E_T', E_T) < epsilon
+
+E_T => sigma_E_T => E_T'
+d(E_T', E_T) < epsilon</pre>
+</section>
+<section>
+  <h2>8. Time as Propagation</h2>
+  <pre>T = Propagation(E_T => sigma_E_T => E_T')</pre>
+</section>
+<section>
+  <h2>9. Future-Side Frame Calling</h2>
+  <pre>FutureCall(E_T) := Select(E_T, Sigma_T^adm; P)
+FutureCall(E_T) = sigma_E_T</pre>
+</section>
+<section>
+  <h2>10. Projection Residue</h2>
+  <pre>e* = || Pi - proj_t(Pi) ||
+
+e_T*(sigma) ~ d( Eval_sigma(Theta, R, Z, Lambda), E_T )
+
+e_T*(sigma_E_T) < epsilon</pre>
+</section>
+<section>
+  <h2>11. Residue and Spark</h2>
+  <pre>e* = e*_spark + e*_residue
+
+e*_spark = residue convertible into next-stage generation
+
+e*_residue = unconverted remainder that distorts closure or is pushed into adjacent loops
+
+Delta e*_{k,spark}(sigma) > 0 => gift
+Delta e*_{k,residue}(sigma) > 0 => harm</pre>
+</section>
+<section>
+  <h2>12. Path Class</h2>
+  <pre>[sigma_E_T]</pre>
+  <p>This is the class of histories that can satisfy the same result closure. From the result side, they may be equivalent. From the path side, they differ by residue distribution.</p>
+</section>
+<section>
+  <h2>13. Path Loss</h2>
+  <pre>L_path(sigma)
+= e*_{self,residue}(sigma)
++ lambda * sum_{k in N} max(0, Delta e*_{k,residue}(sigma))
+
+Delta e*_{k,residue}(sigma)
+= e*_{k,after,residue}(sigma)
+- e*_{k,before,residue}
+
+sigma_E_T
+= argmin_{sigma in [sigma_E_T]} L_path(sigma)</pre>
+  <pre>ugly = self residue
+harm = residue pushed into adjacent loops
+gift = spark offered without residue overflow</pre>
+</section>
+<section>
+  <h2>14. Object Reading</h2>
+  <pre>O_x = StableLoop(E_x, sigma_E_x; P_x)
+
+O_x = Fix(E_x => sigma_E_x => E_x')
+d(E_x', E_x) < epsilon</pre>
+</section>
+<section>
+  <h2>15. Result-Hub Synchronization</h2>
+  <pre>E => { sigma_E^R1, sigma_E^R2, sigma_E^R3, ... }
+
+Objective_epsilon(E)
+iff
+for all R_i in R:
+d(E_i', E) < epsilon</pre>
+</section>
+<section>
+  <h2>16. Complete Engine Equation</h2>
+  <pre>E_T = Eval_sigma_T(Theta, R, Z, Lambda)
+
+sigma_E_T = Select(E_T, Sigma_T^adm; P)
+
+E_T' = Eval_sigma_E_T(Theta, R, Z, Lambda)
+
+d(E_T', E_T) < epsilon</pre>
+  <p>with path selection:</p>
+  <pre>sigma_E_T
+= argmin_{sigma in [sigma_E_T]}
+[
+e*_{self,residue}(sigma)
++ lambda * sum_{k in N} max(0, Delta e*_{k,residue}(sigma))
+]</pre>
+</section>
+<section>
+  <h2>17. Minimal Carry</h2>
+  <pre>Time Engine
+= Forward Gear-Time
++ Free-Number Inversion
++ Result-Hub Synchronization
++ Residue/Spark Path Selection
+
+Time = Propagation(E_T => sigma_E_T => E_T')
+
+Freedom = path selection inside [sigma_E_T]
+
+Ethics = residue transfer minimization
+
+Dignity = quality of closing self-loop without pushing residue into adjacent loops</pre>
+</section>
+</main>
+<footer><p>Phi-Y OS / Time Engine Formula Appendix v0.2</p></footer>
+</body>
+</html>
